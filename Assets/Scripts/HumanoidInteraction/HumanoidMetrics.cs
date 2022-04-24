@@ -173,13 +173,13 @@ namespace HumanoidInteraction
                     lines.Add(lineName);
                 foreach (string lineName in lines)
                 {
-                    var controlLine = referenceControl.transform.Find(lineName).gameObject.GetComponent<TransformConnection>();
-                    var userLine = referenceUser.transform.Find(lineName).gameObject.GetComponent<TransformConnection>();
+                    LineRenderer controlLine = (LineRenderer) referenceControl.transform.Find(lineName).gameObject.GetComponent(typeof(LineRenderer));
+                    LineRenderer userLine = (LineRenderer) referenceUser.transform.Find(lineName).gameObject.GetComponent(typeof(LineRenderer));
                     if (controlLine == null || userLine == null)
                         return;
 
-                    var controlDispl = controlLine.Tail.localPosition - controlLine.Head.localPosition;
-                    var userDispl = userLine.Tail.localPosition - userLine.Head.localPosition;
+                    var controlDispl = controlLine.GetPosition(1) - controlLine.GetPosition(0);
+                    var userDispl = userLine.GetPosition(1) - userLine.GetPosition(0);
                     controlLines.Add(controlDispl);
                     userLines.Add(userDispl);
                 }
@@ -190,8 +190,9 @@ namespace HumanoidInteraction
                 var t = Mathf.Pow(dot, strictness);
                 var color = Color.Lerp(astrayColor, goodColor, t);
                 var markerRenderer = marker.GetComponent<Renderer>();
-                markerRenderer.material.SetColor("_Color", color);
-                var light = marker.transform.GetComponent<Light>();
+                markerRenderer.material.SetColor("_BaseColor", color);
+                markerRenderer.material.SetColor("_EmissionColor", color);
+                Light light = (Light) marker.transform.GetChild(0).GetComponent(typeof(Light));
                 light.color = color;
 
                 // Possibly update the arrow for this region
