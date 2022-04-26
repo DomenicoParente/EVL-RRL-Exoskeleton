@@ -142,11 +142,12 @@ public class LiveDataReader : MonoBehaviour
             if(x == y && y == z)
             {
                 pt.SetActive(false);
-                return;
             }
-            
-            pt.SetActive(true);
-            pt.transform.localPosition = new Vector3(x, z, y) * bodyScale;
+            else
+            {
+                pt.SetActive(true);
+                pt.transform.localPosition = new Vector3(x, z, y) * bodyScale;
+            }
         }
     }
 }

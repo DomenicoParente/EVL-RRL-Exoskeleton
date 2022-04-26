@@ -195,41 +195,17 @@ namespace HumanoidInteraction
                 Light light = (Light) marker.transform.GetChild(0).GetComponent(typeof(Light));
                 light.color = color;
 
-                // Possibly update the arrow for this region
-                //UpdateArrow(controlName, t, controlDispl, userDispl, userConnection);
+                // Update the arrow of a particular body part
+                //UpdateArrow(t, avgControl, avgUser);
 
-                
             }
         }
 
-        private void UpdateArrow(string connectionName, float t, Vector3 controlDisp, Vector3 userDisp, TransformConnection user)
+        private void UpdateArrow(float t, Vector3 avgControl, Vector3 avgUser, GameObject arrow)
         {
-            for (var i = 0; i < arrowMarkers.Count; i++)
-            {
-                var set = arrowMarkers[i];
-                if (!connectionName.Contains(set.Head) || !connectionName.Contains(set.Tail))
-                    continue;
-
-                var arrow = arrowTransforms[i];
-
-                var dif = controlDisp - userDisp;
-                if (dif.sqrMagnitude == 0f)
-                    return;
-
-                arrow.position = (user.Head.position + user.Tail.position) / 2;
-
-                if (t > tThreshold)
-                {
-                    arrow.localScale = Vector3.Lerp(arrow.localScale, Vector3.one * 0.001f, t + .1f);
-                    return;
-                }
-
-                arrow.localScale = Vector3.Lerp(arrow.localScale, Vector3.one * (1f - t), .9f);
-
-                // Look towards object, but also try to keep the z-axis visible to user
-                arrow.localRotation = Quaternion.LookRotation(dif) *
-                                      Quaternion.Euler(0f, 0f, transform.parent.rotation.eulerAngles.y);
-            }
+             var dif = avgControl - avgUser;
+             if (dif.sqrMagnitude == 0f)
+                 return;
         }
     }
 }
