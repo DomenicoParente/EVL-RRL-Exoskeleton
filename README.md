@@ -23,7 +23,8 @@
 
 - [Unity 2021.2 family](https://unity3d.com/get-unity/download/archive)  
 - [Unity Standalone File Browser 1.2](https://github.com/gkngkc/UnityStandaloneFileBrowser)  
-- [Vicon Unity Plugin 1.3.1](https://www.vicon.com/software/third-party/unity/)
+- [Vicon Unity Plugin 1.3.1](https://www.vicon.com/software/third-party/unity/)  
+- [SAFullBodyIK](https://www.github.com/Stereoarts/SAFullBodyIK)  
 
 ## How to Build  
 
@@ -39,8 +40,8 @@
 
 ### WebGL  
 
-- Not supported right now.
-- Everything *should* have compatibility with WebGL builds; however, the native file browser plugin requires additional considerations as noted in their respective files.
+- Not supported right now.  
+- Everything *should* have compatibility with WebGL builds; however, the native file browser plugin requires additional considerations as noted in their respective files.  
 - As it stands right now, the application will build & deploy to WebGL but fails at IO locally.  
 
 ## Functionality  
@@ -66,16 +67,19 @@ Operator can open up CSV's in the initially provided format and .vsk's for ascer
 
 ![Tooltip in action](README/gifs/demo_tooltips.gif)  
 *Tooltips*  
-Highlighting a marker will bring up the marker's name  
+Highlighting a marker will bring up the marker's name.  
 
 ![Live Context](README/gifs/demo_livecontext.gif)  
 *Live Streaming*  
-The surrounding context using the [Vicon DataStream SDK](#software-and-plugin-requirements)  
+The surrounding context using the [Vicon DataStream SDK](#software-and-plugin-requirements).  
+
+![Visualization mode selection](README/gifs/demo_visualizationmode.gif)  
+*Visualization mode selection*  
+Operator can choose the display mode between the exoskeleton and the humanoid 3d model.  
 
 ### Next Steps  
 
 - Sync motion with user's pace
-- Bodies w/ IK
 - Welcoming environments
 - More  
 
@@ -91,13 +95,25 @@ Lighting and all visuals not related to exoskeletons.
 \- Exoskeletons -
 
 - Control Base
-  - Collider + Exoskeleton Manipulation & Displacement for user interaction, speeds are customizeable
+  - Collider + Manipulation & Displacement for user interaction, speeds are customizeable
   - 2 Sprite Renderers to show grab region and forward (for motion setup) axis
   - Exoskeleton Line Renderer, thickness is customizeable
   - Exoskeleton Center, Marker Group is customizeable
 - User Base : Control Base
   - User Angle Metrics, good / bad colors, arrow, thresholds customizeable. Arrow Markers are the default markers to have Arrows if no user inputs.
 All of the points and line renderers point and parent to these objects.
+
+\- Humanoids -
+
+A humanoid 3d model has been introduced that can move according to the data provided through an inverse kinematics algorithm. The plugin was used for the purpose is [SAFullBodyIK](https://www.github.com/Stereoarts/SAFullBodyIK) which allows different degrees of freedom regarding the management of the movement of the model. In this case, the head, shoulders, elbows, hands, hips, knees and feet were used as constraints for the movement of the model. Through the unity editor you can change the degree of freedom of movement and rotation of each part of the body.
+
+- Control Base
+  - Collider + Manipulation & Displacement for user interaction, speeds are customizeable
+  - 2 Sprite Renderers to show grab region and forward (for motion setup) axis
+  - Humanoid Center, Marker Group is customizeable
+  - Humanoid 3d model with animation and SAFullBodyIK and Humanoid Movements scripts to control the movement of the model
+- User Base : Control Base
+  - Humanoid Metrics, good / bad colors, arrow, thresholds customizeable. 
 
 Screens Canvas  
 
@@ -109,7 +125,8 @@ Screens Canvas
   - File Name is filled in via Open F(ile)E(xplorer)
   - Open FE starts the File Explorer with a csv filter. Environment slash is customizeable for non-Windows platforms.
   - Play Controls is a collection of UI elements that all interface with the object's Data Player
-  - Displacement Options interfaces with the relevant exoskeleton base
+  - Displacement Options interfaces with the relevant exoskeleton base or humanoid base
+  - Visualization Options allow to choose between the visualization of exoskeleton or humanoid 3d model
 - User Side : Control Side
   - Strictness allows the user to change the leniency of the angles before the joints start changing colors.
   - Arrows Entry contains a button that opens an input field. If valid head tail pairs are put in, Arrows are instantiated to further guide the user through the UserAngleMetrics.
