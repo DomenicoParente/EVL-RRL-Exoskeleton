@@ -73,7 +73,7 @@ Highlighting a marker will bring up the marker's name.
 *Live Streaming*  
 The surrounding context using the [Vicon DataStream SDK](#software-and-plugin-requirements).  
 
-![Visualization mode selection](README/gifs/demo_visualization_mode.gif)  
+![Visualization mode selection](README/gifs/demo_visualizationmode.gif)  
 *Visualization mode selection*  
 Operator can choose the display mode between the exoskeleton and the humanoid 3d model.  
 
