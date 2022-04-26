@@ -23,8 +23,8 @@
 
 - [Unity 2021.2 family](https://unity3d.com/get-unity/download/archive)  
 - [Unity Standalone File Browser 1.2](https://github.com/gkngkc/UnityStandaloneFileBrowser)  
-- [Vicon Unity Plugin 1.3.1](https://www.vicon.com/software/third-party/unity/)
-- [SAFullBodyIK](https://www.github.com/Stereoarts/SAFullBodyIK)
+- [Vicon Unity Plugin 1.3.1](https://www.vicon.com/software/third-party/unity/)  
+- [SAFullBodyIK](https://www.github.com/Stereoarts/SAFullBodyIK)  
 
 ## How to Build  
 
@@ -40,8 +40,8 @@
 
 ### WebGL  
 
-- Not supported right now.
-- Everything *should* have compatibility with WebGL builds; however, the native file browser plugin requires additional considerations as noted in their respective files.
+- Not supported right now.  
+- Everything *should* have compatibility with WebGL builds; however, the native file browser plugin requires additional considerations as noted in their respective files.  
 - As it stands right now, the application will build & deploy to WebGL but fails at IO locally.  
 
 ## Functionality  
@@ -73,9 +73,9 @@ Highlighting a marker will bring up the marker's name.
 *Live Streaming*  
 The surrounding context using the [Vicon DataStream SDK](#software-and-plugin-requirements).  
 
-![Visualization mode selection](README/gifs/demo_visualization_mode.gif)
-*Visualization mode selection*
-Operator can choose the display mode between the exoskeleton and the humanoid 3d model.
+![Visualization mode selection](README/gifs/demo_visualization_mode.gif)  
+*Visualization mode selection*  
+Operator can choose the display mode between the exoskeleton and the humanoid 3d model.  
 
 ### Next Steps  
 
