@@ -38,15 +38,28 @@ namespace HumanoidInteraction
         public GameObject leftFoot;
         public GameObject rightFoot;
 
+        [SerializeField] private LineMarkerGroup headMarkers;
+        [SerializeField] private LineMarkerGroup hipsMarkers;
+        [SerializeField] private LineMarkerGroup leftWristMarkers;
+        [SerializeField] private LineMarkerGroup rightWristMarkers;
+        [SerializeField] private LineMarkerGroup leftElbowMarkers;
+        [SerializeField] private LineMarkerGroup rightElbowMarkers;
+        [SerializeField] private LineMarkerGroup leftArmMarkers;
+        [SerializeField] private LineMarkerGroup rightArmMarkers;
+        [SerializeField] private LineMarkerGroup leftKneeMarkers;
+        [SerializeField] private LineMarkerGroup rightKneeMarkers;
+        [SerializeField] private LineMarkerGroup leftFootMarkers;
+        [SerializeField] private LineMarkerGroup rightFootMarkers;
+
         private List<Transform> arrowTransforms;
-        private Dictionary<GameObject, string> matches;
+        private Dictionary<GameObject, LineMarkerGroup> matches;
 
         private float strictness;
 
         private void Start()
         {
             // set the matches between points and body marks
-            matches = new Dictionary<GameObject, string>();
+            matches = new Dictionary<GameObject, LineMarkerGroup>();
             SetMatches();
             strictness = defaultStrictness;
             arrowTransforms = new List<Transform>();
@@ -64,35 +77,30 @@ namespace HumanoidInteraction
             referenceUser.gameObject.GetComponent<ExoskeletonInteraction.ExoskeletonLineRenderer>().UpdateLines();
 
             // Head
-            matches.Add(head, "LineRenderer: LFHD - RFHD," +
-                "LineRenderer: LFHD - LBHD," +
-                "LineRenderer: LFHD - RBHD," +
-                "LineRenderer: RFHD - LBHD," +
-                "LineRenderer: RFHD - RBHD," +
-                "LineRenderer: LBHD - RBHD");
+            matches.Add(head, headMarkers);
 
             // Wrists
-            matches.Add(leftWrist, "LineRenderer: LELB - LWRB");
-            matches.Add(rightWrist, "LineRenderer: RELB - RWRB");
+            matches.Add(leftWrist, leftWristMarkers);
+            matches.Add(rightWrist, rightWristMarkers);
 
             // Elbows
-            matches.Add(leftElbow, "LineRenderer: LSHO - LELB");
-            matches.Add(rightElbow, "LineRenderer: RSHO - RELB");
+            matches.Add(leftElbow, leftElbowMarkers);
+            matches.Add(rightElbow, rightElbowMarkers);
 
             // Arms
-            matches.Add(leftArm, "LineRenderer: CLAV - RSHO");
-            matches.Add(rightArm, "LineRenderer: CLAV - LSHO");
+            matches.Add(leftArm, leftArmMarkers);
+            matches.Add(rightArm, rightArmMarkers);
 
             // Hips
-            matches.Add(hips, "LineRenderer: LASI - RPSI,LineRenderer: RASI - LPSI");
+            matches.Add(hips, hipsMarkers);
 
             // Knees
-            matches.Add(leftKnee, "LineRenderer: LASI - LKNE,LineRenderer: LPSI - LKNE");
-            matches.Add(rightKnee, "LineRenderer: RASI - RKNE,LineRenderer: RPSI - RKNE");
+            matches.Add(leftKnee, leftKneeMarkers);
+            matches.Add(rightKnee, rightKneeMarkers);
 
             // Feet
-            matches.Add(leftFoot, "LineRenderer: LKNE - LANK");
-            matches.Add(rightFoot, "LineRenderer: RKNE - RANK");
+            matches.Add(leftFoot, leftFootMarkers);
+            matches.Add(rightFoot, rightFootMarkers);
         }
 
         private void Update()
@@ -101,22 +109,21 @@ namespace HumanoidInteraction
 
             List<string> values = new List<string>();
             GameObject key;
+            LineMarkerGroup markers;
             foreach (var instance in matches)
             {
                 key = instance.Key;
-                matches.TryGetValue(key, out var val);
+                matches.TryGetValue(key, out markers);
+                foreach (var markerName in markers.MarkerNames)
+                {
+                    var t1 = referenceControl.transform.Find(markerName);
+                    var t2 = referenceUser.transform.Find(markerName);
 
-                foreach (string marker in val.Split(","))
-                    values.Add(marker);
+                    if (!t1 || !t2)
+                        return;
+                }
             }
-            foreach (string markerName in values)
-            {
-                var t1 = referenceControl.transform.Find(markerName);
-                var t2 = referenceUser.transform.Find(markerName);
-
-                if (!t1 || !t2)
-                    return;
-            }
+            
             // var numMarkers = arrowMarkers.Count;
             // if (arrowTransforms.Count != numMarkers)
             //    CreateNewArrows(numMarkers);
@@ -159,20 +166,18 @@ namespace HumanoidInteraction
 
         private void UpdateVisualMetrics()
         {
-            List<string> lines = new List<string>();
             List<Vector3> controlLines = new List<Vector3>();
             List<Vector3> userLines = new List<Vector3>();
             GameObject marker;
+            LineMarkerGroup lines;
             foreach (var instance in matches)
             {
                 marker = instance.Key;
-                matches.TryGetValue(marker, out var val);
-                lines.Clear();
+                matches.TryGetValue(marker, out lines);
                 controlLines.Clear();
                 userLines.Clear();
-                foreach (string lineName in val.Split(","))
-                    lines.Add(lineName);
-                foreach (string lineName in lines)
+
+                foreach (string lineName in lines.MarkerNames)
                 {
                     LineRenderer controlLine = (LineRenderer) referenceControl.transform.Find(lineName).gameObject.GetComponent(typeof(LineRenderer));
                     LineRenderer userLine = (LineRenderer) referenceUser.transform.Find(lineName).gameObject.GetComponent(typeof(LineRenderer));

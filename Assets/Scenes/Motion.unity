@@ -7493,6 +7493,18 @@ MonoBehaviour:
   rightKnee: {fileID: 470820560}
   leftFoot: {fileID: 297913975}
   rightFoot: {fileID: 597137740}
+  headMarkers: {fileID: 11400000, guid: 9e24a688da893fe48b94ca15ae7a91b2, type: 2}
+  hipsMarkers: {fileID: 11400000, guid: 4acaf7b23dabb544eb92cbd22d2b9627, type: 2}
+  leftWristMarkers: {fileID: 11400000, guid: 641444260154c2144bb793a601fbe87e, type: 2}
+  rightWristMarkers: {fileID: 11400000, guid: db84640da86adbc45aa1babf29c892ec, type: 2}
+  leftElbowMarkers: {fileID: 11400000, guid: 25ee992dc557f134ab49ccf87f1e3469, type: 2}
+  rightElbowMarkers: {fileID: 11400000, guid: a39506c37ff951442aac84de9ebdffe0, type: 2}
+  leftArmMarkers: {fileID: 11400000, guid: 2ae0abd3cab82c2429ea3436ad8624c9, type: 2}
+  rightArmMarkers: {fileID: 11400000, guid: 497caa687d6ef79438ed1059e1e7896b, type: 2}
+  leftKneeMarkers: {fileID: 11400000, guid: 3d64c272596f33e44bd4bda7a72442af, type: 2}
+  rightKneeMarkers: {fileID: 11400000, guid: 01a8f96c3ef9fea4495e86063dde3510, type: 2}
+  leftFootMarkers: {fileID: 11400000, guid: 1c38c941840f89546b70588dca3ec548, type: 2}
+  rightFootMarkers: {fileID: 11400000, guid: 189ad94f20e58284f975de8e6b6c55f9, type: 2}
   markerGroup: {fileID: 11400000, guid: 7d15cd7bddbf5124d804353c25e19e70, type: 2}
   referenceParent: {fileID: 968018549}
 --- !u!4 &765413092 stripped
@@ -7519,7 +7531,6 @@ MonoBehaviour:
   arrowPrefab: {fileID: 5474745244359900056, guid: 12f9ea024e6c6944c870897464eed1c0,
     type: 3}
   arrowMarkers: []
-  tThreshold: 0.51
   referenceControl: {fileID: 694478705}
   referenceUser: {fileID: 968018549}
   head: {fileID: 449759607}
@@ -7999,6 +8010,7 @@ MonoBehaviour:
   control: {fileID: 694478706}
   user: {fileID: 968018551}
   defaultStrictness: 0.6
+  defaultTolerance: 4
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -12194,6 +12206,18 @@ MonoBehaviour:
   rightKnee: {fileID: 246233077}
   leftFoot: {fileID: 2080250427}
   rightFoot: {fileID: 1034255217}
+  headMarkers: {fileID: 11400000, guid: 9e24a688da893fe48b94ca15ae7a91b2, type: 2}
+  hipsMarkers: {fileID: 11400000, guid: 4acaf7b23dabb544eb92cbd22d2b9627, type: 2}
+  leftWristMarkers: {fileID: 11400000, guid: 641444260154c2144bb793a601fbe87e, type: 2}
+  rightWristMarkers: {fileID: 11400000, guid: db84640da86adbc45aa1babf29c892ec, type: 2}
+  leftElbowMarkers: {fileID: 11400000, guid: 25ee992dc557f134ab49ccf87f1e3469, type: 2}
+  rightElbowMarkers: {fileID: 11400000, guid: a39506c37ff951442aac84de9ebdffe0, type: 2}
+  leftArmMarkers: {fileID: 11400000, guid: 2ae0abd3cab82c2429ea3436ad8624c9, type: 2}
+  rightArmMarkers: {fileID: 11400000, guid: 497caa687d6ef79438ed1059e1e7896b, type: 2}
+  leftKneeMarkers: {fileID: 11400000, guid: 3d64c272596f33e44bd4bda7a72442af, type: 2}
+  rightKneeMarkers: {fileID: 11400000, guid: 01a8f96c3ef9fea4495e86063dde3510, type: 2}
+  leftFootMarkers: {fileID: 11400000, guid: 1c38c941840f89546b70588dca3ec548, type: 2}
+  rightFootMarkers: {fileID: 11400000, guid: 189ad94f20e58284f975de8e6b6c55f9, type: 2}
   markerGroup: {fileID: 11400000, guid: 7d15cd7bddbf5124d804353c25e19e70, type: 2}
   referenceParent: {fileID: 694478705}
 --- !u!114 &1996206738

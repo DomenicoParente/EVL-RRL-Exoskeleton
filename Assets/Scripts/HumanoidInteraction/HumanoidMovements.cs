@@ -24,14 +24,28 @@ namespace HumanoidInteraction
         public GameObject leftFoot;
         public GameObject rightFoot;
 
-        private Dictionary<GameObject, string> matches;
+        [SerializeField] private MarkerGroup headMarkers;
+        [SerializeField] private MarkerGroup hipsMarkers;
+        [SerializeField] private MarkerGroup leftWristMarkers;
+        [SerializeField] private MarkerGroup rightWristMarkers;
+        [SerializeField] private MarkerGroup leftElbowMarkers;
+        [SerializeField] private MarkerGroup rightElbowMarkers;
+        [SerializeField] private MarkerGroup leftArmMarkers;
+        [SerializeField] private MarkerGroup rightArmMarkers;
+        [SerializeField] private MarkerGroup leftKneeMarkers;
+        [SerializeField] private MarkerGroup rightKneeMarkers;
+        [SerializeField] private MarkerGroup leftFootMarkers;
+        [SerializeField] private MarkerGroup rightFootMarkers;
+
+
+        private Dictionary<GameObject, MarkerGroup> matches;
         [SerializeField] private MarkerGroup markerGroup;
         [SerializeField] private Transform referenceParent;
 
         private void Start()
         {
             // set the matches between points and body parts
-            matches = new Dictionary<GameObject, string>();
+            matches = new Dictionary<GameObject, MarkerGroup>();
             SetMatches();
         }
 
@@ -39,28 +53,26 @@ namespace HumanoidInteraction
         {
             CenterPosition();
             GameObject key;
-            int count = 0;
-            List<string> values = new List<string>();
+            MarkerGroup markers;
             foreach (var instance in matches)
             {
+                int count = 0;
                 key = instance.Key;
-                matches.TryGetValue(key, out var val);
-            
-                foreach (string marker in val.Split(","))
-                    values.Add(marker);
-            }
-            foreach (string markerName in values)
-            {
+                matches.TryGetValue(key, out markers);
+                foreach (var markerName in markers.MarkerNames)
+                {
                 var t = referenceParent.transform.Find(markerName);
                 if (!t)
                     return;
                 else if (t.localPosition.x == 0 && t.localPosition.y == 0 && t.localPosition.z == 0)
                     count+=1;
+                }
+                if (count == markers.MarkerNames.Length)
+                {
+                    return;
+                }
             }
-            if (count == values.Count)
-            {
-                return;
-            }
+            
             UpdateMovements();
 
         }
@@ -89,30 +101,30 @@ namespace HumanoidInteraction
         {
 
             // Head
-            matches.Add(head, "RFHD,LFHD,LBHD,RBHD");
+            matches.Add(head, headMarkers);
 
             // Wrists
-            matches.Add(leftWrist, "LWRA,LWRB");
-            matches.Add(rightWrist, "RWRA,RWRB");
+            matches.Add(leftWrist, leftWristMarkers);
+            matches.Add(rightWrist, rightWristMarkers);
 
             // Elbows
-            matches.Add(leftElbow, "LELB,LUPA");
-            matches.Add(rightElbow, "RELB,RUPA");
+            matches.Add(leftElbow, leftElbowMarkers);
+            matches.Add(rightElbow, rightElbowMarkers);
 
             // Arms
-            matches.Add(leftArm, "RSHO");
-            matches.Add(rightArm, "LSHO");
+            matches.Add(leftArm, leftArmMarkers);
+            matches.Add(rightArm, rightArmMarkers);
 
             // Hips
-            matches.Add(hips, "RASI,LASI,RPSI,LPSI");
+            matches.Add(hips, hipsMarkers);
 
             // Knees
-            matches.Add(leftKnee, "LKNE");
-            matches.Add(rightKnee, "RKNE");
+            matches.Add(leftKnee, leftKneeMarkers);
+            matches.Add(rightKnee, rightKneeMarkers);
 
             // Feet
-            matches.Add(leftFoot, "LANK");
-            matches.Add(rightFoot, "RANK");
+            matches.Add(leftFoot, leftFootMarkers);
+            matches.Add(rightFoot, rightFootMarkers);
         }
 
         private Vector3 GetMeanVector(List<Vector3> positions)
@@ -137,21 +149,18 @@ namespace HumanoidInteraction
         {
             // update the positions of all body parts
             List<Vector3> positions = new List<Vector3>();
-            List<string> values = new List<string>();
             GameObject key;
+            MarkerGroup markers;
             foreach (var instance in matches)
             {
                 key = instance.Key;
                 positions.Clear();
-                values.Clear();
-                if (!matches.TryGetValue(key, out var val))
+                if (!matches.TryGetValue(key, out markers))
                 {
                     print("ERROR. No value found in dictionary");
                     continue;
                 }
-                foreach (string marker in val.Split(","))
-                    values.Add(marker);
-                foreach (string markerName in values)
+                foreach (string markerName in markers.MarkerNames)
                 {
                     var t = referenceParent.transform.Find(markerName);
                     if (!t)

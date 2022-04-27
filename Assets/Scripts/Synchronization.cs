@@ -1,3 +1,4 @@
+// Handles the synchronization between the prerecorded motion and the live one
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,14 +11,17 @@ public class Synchronization : MonoBehaviour
     [SerializeField] private ExoskeletonLineRenderer control, user;
 
     [SerializeField] private float defaultStrictness = 6f;
+    [SerializeField] private int defaultTolerance = 4;
 
     private float strictness;
+    private int tolerance;
     private bool synch;
 
     // Start is called before the first frame update
     void Start()
     {
         strictness = defaultStrictness;
+        tolerance = defaultTolerance;
     }
 
     // Update is called once per frame
@@ -37,6 +41,7 @@ public class Synchronization : MonoBehaviour
             return;
 
         stop = true;
+        int count = 0;
         foreach (var controlPair in control.ConnectionsByName)
         {
             
@@ -52,8 +57,12 @@ public class Synchronization : MonoBehaviour
             var dot = Vector3.Dot(controlDispl.normalized, userDispl.normalized);
             if(dot < strictness)
             {
-                stop = false;
+                count++;
             }
+        }
+        if (count < tolerance)
+        {
+            stop = false;
         }
         dataPlayer.SetPlay(stop);
     }
