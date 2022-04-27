@@ -22,9 +22,6 @@ namespace HumanoidInteraction
                  "Enter pairs of connected markers for arrow feedback.")]
         [SerializeField] private List<MarkerSet> arrowMarkers;
 
-        [Tooltip("t values under this number will draw an arrow")]
-        [SerializeField, Range(0f, 1f)] private float tThreshold = 0.51f;
-
         [SerializeField] private Transform referenceControl;
         [SerializeField] private Transform referenceUser;
 
@@ -63,6 +60,8 @@ namespace HumanoidInteraction
 
         private void SetMatches()
         {
+            referenceControl.gameObject.GetComponent<ExoskeletonInteraction.ExoskeletonLineRenderer>().UpdateLines();
+            referenceUser.gameObject.GetComponent<ExoskeletonInteraction.ExoskeletonLineRenderer>().UpdateLines();
 
             // Head
             matches.Add(head, "LineRenderer: LFHD - RFHD," +
@@ -98,6 +97,8 @@ namespace HumanoidInteraction
 
         private void Update()
         {
+
+
             List<string> values = new List<string>();
             GameObject key;
             foreach (var instance in matches)

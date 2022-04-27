@@ -17,10 +17,15 @@ namespace ExoskeletonInteraction
 
         private void Update()
         {
-            if(connections is null)
+            UpdateLines();
+        }
+
+        public void UpdateLines()
+        {
+            if (connections is null)
                 return;
 
-            foreach(var connection in connections)
+            foreach (var connection in connections)
             {
                 var lr = LrsByConnection[connection];
                 lr.SetPosition(0, connection.Head.position);
