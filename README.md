@@ -1,6 +1,7 @@
 ﻿# Exoskeleton Analysis Tool (EAT)  
 
-![EAT in action](README/gifs/demo_squats.gif)  
+![EAT in action (Exoskeleton view)](README/gifs/demo_squats.gif)  
+![EAT in action (Humanoid view)](README/gifs/demo_squats_humanoid.gif)  
 
 ## How to Use
 
